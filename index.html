@@ -6,94 +6,141 @@
     <title>Kalkulator Bunga</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 30px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         label {
+            font-weight: 600;
+            margin-bottom: 8px;
             display: block;
-            font-weight: bold;
+            color: #555;
         }
 
-        input[type="number"], input[type="text"] {
+        input[type="number"] {
             width: 100%;
-            padding: 10px;
-            margin: 5px 0;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             box-sizing: border-box;
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
         }
 
         button {
-            padding: 10px 20px;
-            background-color: #28a745;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
             color: white;
             border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         button:hover {
-            background-color: #218838;
+            background-color: #0056b3;
         }
 
         .result {
             margin-top: 20px;
-            padding: 15px;
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #e9f7ef;
+            border: 1px solid #d4edda;
+            border-radius: 5px;
+            color: #155724;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .result h3 {
+            margin-bottom: 15px;
+            color: #155724;
         }
     </style>
 </head>
 <body>
 
-    <h1>Kalkulator Bunga</h1>
+    <div class="container">
+        <h1>Kalkulator Bunga</h1>
 
-    <form id="bungaForm">
-        <div class="form-group">
-            <label for="pokok">Jumlah Pokok (Rp):</label>
-            <input type="number" id="pokok" placeholder="Masukkan jumlah pokok" required>
-        </div>
+        <form id="bungaForm">
+            <div class="form-group">
+                <label for="pokok">Jumlah Pokok (Rp):</label>
+                <input type="number" id="pokok" placeholder="Masukkan jumlah pokok" required>
+            </div>
 
-        <div class="form-group">
-            <label for="sukuBunga">Suku Bunga (% per tahun):</label>
-            <input type="number" id="sukuBunga" placeholder="Masukkan suku bunga" required>
-        </div>
+            <div class="form-group">
+                <label for="sukuBunga">Suku Bunga (% per tahun):</label>
+                <input type="number" id="sukuBunga" placeholder="Masukkan suku bunga" required>
+            </div>
 
-        <div class="form-group">
-            <label for="waktu">Waktu (tahun):</label>
-            <input type="number" id="waktu" placeholder="Masukkan jangka waktu dalam tahun" required>
-        </div>
+            <div class="form-group">
+                <label for="waktu">Waktu (tahun):</label>
+                <input type="number" id="waktu" placeholder="Masukkan jangka waktu dalam tahun" required>
+            </div>
 
-        <button type="button" onclick="hitungBunga()">Hitung Bunga</button>
-    </form>
+            <button type="button" onclick="hitungBunga()">Hitung Bunga</button>
+        </form>
 
-    <div id="hasil" class="result"></div>
+        <div id="hasil" class="result"></div>
+    </div>
 
     <script>
         function hitungBunga() {
-            // Ambil nilai dari form
             const pokok = parseFloat(document.getElementById('pokok').value);
             const sukuBunga = parseFloat(document.getElementById('sukuBunga').value);
             const waktu = parseFloat(document.getElementById('waktu').value);
-
-            // Periksa apakah semua nilai valid
+    
             if (isNaN(pokok) || isNaN(sukuBunga) || isNaN(waktu)) {
                 document.getElementById('hasil').innerText = "Mohon masukkan nilai yang valid.";
                 return;
             }
 
-            // Rumus perhitungan bunga sederhana: Bunga = Pokok * Suku Bunga * Waktu
             const bunga = (pokok * sukuBunga * waktu) / 100;
-
-            // Tampilkan hasil
+    
+            const formattedPokok = pokok.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+            const formattedBunga = bunga.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+    
             document.getElementById('hasil').innerHTML = `
                 <h3>Hasil Perhitungan</h3>
-                <p>Jumlah Pokok: Rp ${pokok.toFixed(2)}</p>
+                <p>Jumlah Pokok: Rp ${formattedPokok}</p>
                 <p>Suku Bunga: ${sukuBunga}% per tahun</p>
                 <p>Jangka Waktu: ${waktu} tahun</p>
-                <p><strong>Bunga yang dihasilkan: Rp ${bunga.toFixed(2)}</strong></p>
+                <p><strong>Bunga yang dihasilkan: Rp ${formattedBunga}</strong></p>
             `;
         }
     </script>
