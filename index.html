@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Bunga</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Kalkulator Bunga</h1>
+
+    <form id="bungaForm">
+        <div class="form-group">
+            <label for="pokok">Jumlah Pokok (Rp):</label>
+            <input type="number" id="pokok" placeholder="Masukkan jumlah pokok" required>
+        </div>
+
+        <div class="form-group">
+            <label for="sukuBunga">Suku Bunga (% per tahun):</label>
+            <input type="number" id="sukuBunga" placeholder="Masukkan suku bunga" required>
+        </div>
+
+        <div class="form-group">
+            <label for="waktu">Waktu (tahun):</label>
+            <input type="number" id="waktu" placeholder="Masukkan jangka waktu dalam tahun" required>
+        </div>
+
+        <button type="button" onclick="hitungBunga()">Hitung Bunga</button>
+    </form>
+
+    <div id="hasil" class="result"></div>
+
+    <script>
+        function hitungBunga() {
+            // Ambil nilai dari form
+            const pokok = parseFloat(document.getElementById('pokok').value);
+            const sukuBunga = parseFloat(document.getElementById('sukuBunga').value);
+            const waktu = parseFloat(document.getElementById('waktu').value);
+
+            // Periksa apakah semua nilai valid
+            if (isNaN(pokok) || isNaN(sukuBunga) || isNaN(waktu)) {
+                document.getElementById('hasil').innerText = "Mohon masukkan nilai yang valid.";
+                return;
+            }
+
+            // Rumus perhitungan bunga sederhana: Bunga = Pokok * Suku Bunga * Waktu
+            const bunga = (pokok * sukuBunga * waktu) / 100;
+
+            // Tampilkan hasil
+            document.getElementById('hasil').innerHTML = `
+                <h3>Hasil Perhitungan</h3>
+                <p>Jumlah Pokok: Rp ${pokok.toFixed(2)}</p>
+                <p>Suku Bunga: ${sukuBunga}% per tahun</p>
+                <p>Jangka Waktu: ${waktu} tahun</p>
+                <p><strong>Bunga yang dihasilkan: Rp ${bunga.toFixed(2)}</strong></p>
+            `;
+        }
+    </script>
+
+</body>
+</html>
